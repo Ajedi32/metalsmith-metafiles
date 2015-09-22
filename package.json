@@ -1,0 +1,22 @@
+{
+  "name": "metalsmith-metafiles",
+  "version": "1.0.0",
+  "description": "A Metalsmith plugin to read file metadata from separate files (as an alternative to frontmatter)",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ajedi32/metalsmith-metafiles.git"
+  },
+  "keywords": [
+    "metalsmith"
+  ],
+  "author": "Andrew Meyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ajedi32/metalsmith-metafiles/issues"
+  },
+  "homepage": "https://github.com/Ajedi32/metalsmith-metafiles#readme"
+}
