@@ -4,7 +4,7 @@
   "description": "A Metalsmith plugin to read file metadata from separate files (as an alternative to frontmatter)",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/Ajedi32/metalsmith-metafiles/issues"
   },
-  "homepage": "https://github.com/Ajedi32/metalsmith-metafiles#readme"
+  "homepage": "https://github.com/Ajedi32/metalsmith-metafiles#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-mocha-test": "^0.12.7",
+    "metalsmith": "^2.0.1",
+    "mocha": "^2.3.3"
+  }
 }
