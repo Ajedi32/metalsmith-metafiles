@@ -3,6 +3,10 @@
 A Metalsmith plugin to read file metadata from separate files (as an alternative
 to frontmatter).
 
+For example, when using this plugin you could add metadata to a file named
+`index.html` by creating a file named `index.html.metadata.json` and putting
+your metadata in that file.
+
 ## Installation
 
     npm install --save metalsmith-metafiles
