@@ -21,6 +21,7 @@ list.
 
 ```javascript
 {
+  "frontmatter": false, // Optionally disable frontmatter parsing
   "plugins": {
     "metalsmith-metafiles": true,
     // Other plugins...
