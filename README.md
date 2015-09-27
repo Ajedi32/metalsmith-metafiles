@@ -1,7 +1,7 @@
 # metalsmith-metafiles [![Build Status](https://travis-ci.org/Ajedi32/metalsmith-metafiles.svg)](https://travis-ci.org/Ajedi32/metalsmith-metafiles)
 
-A Metalsmith plugin to read file metadata from separate files (as an alternative
-to frontmatter).
+A [Metalsmith][metalsmith] plugin to read file metadata from separate files (as
+an alternative to frontmatter).
 
 For example, when using this plugin you could add metadata to a file named
 `index.html` by creating a file named `index.html.metadata.json` and putting
@@ -53,3 +53,5 @@ Metalsmith(__dirname)
 ## License
 
 MIT (See [LICENSE](./LICENSE) file)
+
+[metalsmith]: https://github.com/segmentio/metalsmith
