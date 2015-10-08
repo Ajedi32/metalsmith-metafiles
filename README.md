@@ -70,6 +70,20 @@ For example, setting this option to false would result in your `.metadata.json`
 files being put in your destination directory when you build the site. (Unless
 of course they're removed by some other plugin.)
 
+### `postfix`
+
+Type: `String`
+
+Default: `.metadata`
+
+The postfix added to filenames to indicate they are metadata files. This doesn't
+include the file extension, only the extra text before the extension.
+
+For example, setting this option to `.m` would allow you to use `*.m.json` files
+to store file metadata instead of `*.metadata.json` files. Values without a `.`
+in them are also allowed. For example, `meta` would result in `*meta.json` being
+used to store metadata.
+
 ## License
 
 MIT (See [LICENSE](./LICENSE) file)

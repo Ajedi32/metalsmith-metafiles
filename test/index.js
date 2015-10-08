@@ -36,4 +36,45 @@ describe('metalsmith-metafiles', function(){
         });
     });
   });
+
+  context("when the postfix option is set to '.custom'", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/custom_postfix')
+        .use(metafiles({
+          postfix: '.custom'
+        }));
+    });
+
+    it('should apply metadata from *.custom.json files', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.equal(files["index.md"].testKey, "Some value");
+          done();
+        });
+    });
+
+    it('should remove *.custom.json files', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.equal(files["index.md.custom.json"], undefined);
+          done();
+        });
+    });
+
+    it('should not apply metadata from *.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.equal(files["index.md"].otherKey, undefined);
+          done();
+        });
+    });
+
+    it('should not remove *.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.notEqual(files["index.md.metadata.json"], undefined);
+          done();
+        });
+    });
+  });
 });
