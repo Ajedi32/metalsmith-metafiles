@@ -23,7 +23,9 @@ list.
 {
   "frontmatter": false, // Optionally disable frontmatter parsing
   "plugins": {
-    "metalsmith-metafiles": true,
+    "metalsmith-metafiles": {
+      // Options here
+    },
     // Other plugins...
   }
 }
@@ -43,12 +45,30 @@ var metafiles = require('metalsmith-metafiles');
 
 Metalsmith(__dirname)
   .frontmatter(false) // Optionally disable frontmatter parsing
-  .use(metafiles())
+  .use(metafiles({
+    // Options here
+  }))
   .use(/* Other plugins... */)
   .build(function(err) {
     if (err) throw err;
   });
 ```
+
+## Options
+
+metalsmith-metafiles supports the following configuration options:
+
+### `deleteMetaFiles`
+
+Type: `Boolean`
+
+Default: `true`
+
+Determines whether metadata files are removed from the generated site.
+
+For example, setting this option to false would result in your `.metadata.json`
+files being put in your destination directory when you build the site. (Unless
+of course they're removed by some other plugin.)
 
 ## License
 

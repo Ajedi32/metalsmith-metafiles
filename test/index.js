@@ -22,4 +22,18 @@ describe('metalsmith-metafiles', function(){
         done();
       });
   });
+
+  context("when the deleteMetaFiles option is set to false", function(){
+    it('should not remove metadata files', function(done){
+      Metalsmith('test/fixtures/basic')
+        .use(metafiles({
+          deleteMetaFiles: false
+        }))
+        .build(function(err, files){
+          if (err) return done(err);
+          assert.notEqual(files["index.md.metadata.json"], undefined);
+          done();
+        });
+    });
+  });
 });
