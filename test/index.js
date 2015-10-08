@@ -23,6 +23,17 @@ describe('metalsmith-metafiles', function(){
       });
   });
 
+  // Regression test
+  it("should not apply metadata from files with a postfix that isn't `.metadata.json`, but has the same length", function(done){
+    Metalsmith('test/fixtures/wrong_postfix')
+      .use(metafiles())
+      .build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["index.md"].testKey, undefined);
+        done();
+      });
+  });
+
   context("when the deleteMetaFiles option is set to false", function(){
     it('should not remove metadata files', function(done){
       Metalsmith('test/fixtures/basic')
