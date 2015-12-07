@@ -88,4 +88,45 @@ describe('metalsmith-metafiles', function(){
         });
     });
   });
+
+  context("when the prefix option is set to 'm-'", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/custom_prefix')
+        .use(metafiles({
+          prefix: 'm-'
+        }));
+    });
+
+    it('should apply metadata from m-*.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.equal(files["index.md"].testKey, "Correct value");
+          done();
+        });
+    });
+
+    it('should remove m-*.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.equal(files["m-index.md.metadata.json"], undefined);
+          done();
+        });
+    });
+
+    it('should not apply metadata from files without the "m-" prefix', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.equal(files["index.md"].otherKey, undefined);
+          done();
+        });
+    });
+
+    it('should not remove files without the "m-" prefix', function(done){
+      this.metalsmith.build(function(err, files){
+          if (err) return done(err);
+          assert.notEqual(files["index.md.metadata.json"], undefined);
+          done();
+        });
+    });
+  });
 });

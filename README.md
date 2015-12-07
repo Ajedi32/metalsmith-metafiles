@@ -84,6 +84,18 @@ to store file metadata instead of `*.metadata.json` files. Values without a `.`
 in them are also allowed. For example, `meta` would result in `*meta.json` being
 used to store metadata.
 
+### `prefix`
+
+Type: `String`
+
+Default: `""`
+
+The prefix added to filenames to indicate they are metadata files.
+
+For example, setting this option to `"m-"`, in combination with the default
+postfix value of `".metadata"`, would result in `m-*.metadata.json` files being
+used to store metadata.
+
 ## License
 
 MIT (See [LICENSE](./LICENSE) file)
