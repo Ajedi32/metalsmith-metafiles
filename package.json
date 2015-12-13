@@ -25,10 +25,15 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.3",
     "grunt-mocha-test": "^0.12.7",
+    "js-yaml": ">=1.0 <4.0.0",
     "metalsmith": "^2.0.1",
     "mocha": "^2.3.3"
   },
   "dependencies": {
+    "codependency": "^0.1.4",
     "object-assign": "^4.0.1"
+  },
+  "optionalPeerDependencies": {
+    "js-yaml": ">=1.0 <4.0.0"
   }
 }

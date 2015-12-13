@@ -96,6 +96,59 @@ For example, setting this option to `"m-"`, in combination with the default
 postfix value of `".metadata"`, would result in `m-*.metadata.json` files being
 used to store metadata.
 
+### `parsers`
+
+Type: `Object`
+
+Default: `{".json": true}`
+
+An object containing configuration details for the parsers used for different
+metadata formats.
+
+Each key should be an extension used by a parser (including the leading '.'),
+with a value of either `true` or `false` depending on whether or not you want
+the parser for that extension to be enabled.
+
+Currently, two formats are supported: `.json` (via `JSON.parse`), and `.yaml` (
+via `js-yaml`). To use the YAML metadata format, you must have `js-yaml`
+installed (preferably listed as a dependency of your project).
+
+CLI config example:
+
+```javascript
+{
+  "frontmatter": false,
+  "plugins": {
+    "metalsmith-metafiles": {
+      "parsers": {
+        ".json": false, // Disable using JSON metadata files
+        ".yaml": true // Enable using YAML metadata files
+      }
+    },
+    // Other plugins...
+  }
+}
+```
+
+JavaScript example:
+
+```javascript
+var metafiles = require('metalsmith-metafiles');
+
+Metalsmith(__dirname)
+  .frontmatter(false)
+  .use(metafiles({
+    parsers: {
+      ".json": false, // Disable using JSON metadata files
+      ".yaml": true, // Enable using YAML metadata files
+    }
+  }))
+  .use(/* Other plugins... */)
+  .build(function(err) {
+    if (err) throw err;
+  });
+```
+
 ## License
 
 MIT (See [LICENSE](./LICENSE) file)

@@ -129,4 +129,75 @@ describe('metalsmith-metafiles', function(){
         });
     });
   });
+
+  context("when the .yaml parser is enabled", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/yaml_metafiles')
+        .use(metafiles({
+          parsers: {
+            ".yaml": true
+          }
+        }));
+    });
+
+    it('should apply yaml-formatted metadata from *.metadata.yaml files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_one.md"].testKey, "File one value");
+        done();
+      });
+    });
+
+    it('should remove *.metadata.yaml files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_one.md.metadata.yaml"], undefined);
+        done();
+      });
+    });
+
+    it('should still apply json-formatted metadata from *.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_two.md"].testKey, "File two value");
+        done();
+      });
+    });
+
+    it('should still remove *.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_two.md.metadata.json"], undefined);
+        done();
+      });
+    });
+  });
+
+
+  context("when the .json parser is disabled", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/yaml_metafiles')
+        .use(metafiles({
+          parsers: {
+            ".json": false
+          }
+        }));
+    });
+
+    it('should not apply metadata from *.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_two.md"].testKey, undefined);
+        done();
+      });
+    });
+
+    it('should not remove *.metadata.json files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.notEqual(files["file_two.md.metadata.json"], undefined);
+        done();
+      });
+    });
+  });
 });
