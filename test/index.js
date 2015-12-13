@@ -18,13 +18,13 @@ describe('metalsmith-metafiles', function(){
       .use(metafiles())
       .build(function(err, files){
         if (err) return done(err);
-        assert.equal(files["index.md.metadata.json"], undefined);
+        assert.equal(files["index.md.meta.json"], undefined);
         done();
       });
   });
 
   // Regression test
-  it("should not apply metadata from files with a postfix that isn't `.metadata.json`, but has the same length", function(done){
+  it("should not apply metadata from files with a postfix that isn't `.meta.json`, but has the same length", function(done){
     Metalsmith('test/fixtures/wrong_postfix')
       .use(metafiles())
       .build(function(err, files){
@@ -42,7 +42,7 @@ describe('metalsmith-metafiles', function(){
         }))
         .build(function(err, files){
           if (err) return done(err);
-          assert.notEqual(files["index.md.metadata.json"], undefined);
+          assert.notEqual(files["index.md.meta.json"], undefined);
           done();
         });
     });
@@ -72,7 +72,7 @@ describe('metalsmith-metafiles', function(){
         });
     });
 
-    it('should not apply metadata from *.metadata.json files', function(done){
+    it('should not apply metadata from *.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
           if (err) return done(err);
           assert.equal(files["index.md"].otherKey, undefined);
@@ -80,10 +80,10 @@ describe('metalsmith-metafiles', function(){
         });
     });
 
-    it('should not remove *.metadata.json files', function(done){
+    it('should not remove *.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
           if (err) return done(err);
-          assert.notEqual(files["index.md.metadata.json"], undefined);
+          assert.notEqual(files["index.md.meta.json"], undefined);
           done();
         });
     });
@@ -97,7 +97,7 @@ describe('metalsmith-metafiles', function(){
         }));
     });
 
-    it('should apply metadata from m-*.metadata.json files', function(done){
+    it('should apply metadata from m-*.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
           if (err) return done(err);
           assert.equal(files["index.md"].testKey, "Correct value");
@@ -105,10 +105,10 @@ describe('metalsmith-metafiles', function(){
         });
     });
 
-    it('should remove m-*.metadata.json files', function(done){
+    it('should remove m-*.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
           if (err) return done(err);
-          assert.equal(files["m-index.md.metadata.json"], undefined);
+          assert.equal(files["m-index.md.meta.json"], undefined);
           done();
         });
     });
@@ -124,7 +124,7 @@ describe('metalsmith-metafiles', function(){
     it('should not remove files without the "m-" prefix', function(done){
       this.metalsmith.build(function(err, files){
           if (err) return done(err);
-          assert.notEqual(files["index.md.metadata.json"], undefined);
+          assert.notEqual(files["index.md.meta.json"], undefined);
           done();
         });
     });
@@ -140,7 +140,7 @@ describe('metalsmith-metafiles', function(){
         }));
     });
 
-    it('should apply yaml-formatted metadata from *.metadata.yaml files', function(done){
+    it('should apply yaml-formatted metadata from *.meta.yaml files', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
         assert.equal(files["file_one.md"].testKey, "File one value");
@@ -148,15 +148,15 @@ describe('metalsmith-metafiles', function(){
       });
     });
 
-    it('should remove *.metadata.yaml files', function(done){
+    it('should remove *.meta.yaml files', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
-        assert.equal(files["file_one.md.metadata.yaml"], undefined);
+        assert.equal(files["file_one.md.meta.yaml"], undefined);
         done();
       });
     });
 
-    it('should still apply json-formatted metadata from *.metadata.json files', function(done){
+    it('should still apply json-formatted metadata from *.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
         assert.equal(files["file_two.md"].testKey, "File two value");
@@ -164,10 +164,10 @@ describe('metalsmith-metafiles', function(){
       });
     });
 
-    it('should still remove *.metadata.json files', function(done){
+    it('should still remove *.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
-        assert.equal(files["file_two.md.metadata.json"], undefined);
+        assert.equal(files["file_two.md.meta.json"], undefined);
         done();
       });
     });
@@ -184,7 +184,7 @@ describe('metalsmith-metafiles', function(){
         }));
     });
 
-    it('should not apply metadata from *.metadata.json files', function(done){
+    it('should not apply metadata from *.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
         assert.equal(files["file_two.md"].testKey, undefined);
@@ -192,10 +192,10 @@ describe('metalsmith-metafiles', function(){
       });
     });
 
-    it('should not remove *.metadata.json files', function(done){
+    it('should not remove *.meta.json files', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
-        assert.notEqual(files["file_two.md.metadata.json"], undefined);
+        assert.notEqual(files["file_two.md.meta.json"], undefined);
         done();
       });
     });

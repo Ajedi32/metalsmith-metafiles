@@ -4,8 +4,8 @@ A [Metalsmith][metalsmith] plugin to read file metadata from separate files (as
 an alternative to frontmatter).
 
 For example, when using this plugin you could add metadata to a file named
-`index.html` by creating a file named `index.html.metadata.json` and putting
-your metadata in that file.
+`index.html` by creating a file named `index.html.meta.json` and putting your
+metadata in that file.
 
 ## Installation
 
@@ -66,7 +66,7 @@ Default: `true`
 
 Determines whether metadata files are removed from the generated site.
 
-For example, setting this option to false would result in your `.metadata.json`
+For example, setting this option to false would result in your `.meta.json`
 files being put in your destination directory when you build the site. (Unless
 of course they're removed by some other plugin.)
 
@@ -74,14 +74,14 @@ of course they're removed by some other plugin.)
 
 Type: `String`
 
-Default: `.metadata`
+Default: `.meta`
 
 The postfix added to filenames to indicate they are metadata files. This doesn't
 include the file extension, only the extra text before the extension.
 
 For example, setting this option to `.m` would allow you to use `*.m.json` files
-to store file metadata instead of `*.metadata.json` files. Values without a `.`
-in them are also allowed. For example, `meta` would result in `*meta.json` being
+to store file metadata instead of `*.meta.json` files. Values without a `.` in
+them are also allowed. For example, `meta` would result in `*meta.json` being
 used to store metadata.
 
 ### `prefix`
@@ -93,8 +93,8 @@ Default: `""`
 The prefix added to filenames to indicate they are metadata files.
 
 For example, setting this option to `"m-"`, in combination with the default
-postfix value of `".metadata"`, would result in `m-*.metadata.json` files being
-used to store metadata.
+postfix value of `".meta"`, would result in `m-*.meta.json` files being used to
+store metadata.
 
 ### `parsers`
 
