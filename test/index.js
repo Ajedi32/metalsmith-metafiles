@@ -227,4 +227,77 @@ describe('metalsmith-metafiles', function(){
       });
     });
   });
+
+  context("with the extension .custom set to a custom parser", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/custom_parser');
+    });
+
+    it('should pass the contents of the file to the custom parser function', function(done){
+      this.metalsmith.use(metafiles({
+        parsers: {
+          ".custom": function(content) {
+            assert.equal(content.toString(), "Random content\n");
+            return {};
+          }
+        }
+      })).build(function(err, files){
+        if (err) return done(err);
+        done();
+      });
+    });
+
+    it('should pass the full path to the file to the custom parser function', function(done){
+      this.metalsmith.use(metafiles({
+        parsers: {
+          ".custom": function(content, options) {
+            assert(
+              options,
+              "Should pass options object"
+            );
+            assert(
+              options.path,
+              "Options object should have path property"
+            );
+            assert(
+              options.path.match(/^subdir\/file\.md\.meta\.custom$/),
+              "Path '" + options.path + "' should contain the path to the file"
+            );
+            return {};
+          }
+        }
+      })).build(function(err, files){
+        if (err) return done(err);
+        done();
+      });
+    });
+
+    it('should apply the metadata returned from the parser function', function(done){
+      this.metalsmith.use(metafiles({
+        parsers: {
+          ".custom": function(content, options) {
+            return {"testKey": "Test value"};
+          }
+        }
+      })).build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["subdir/file.md"].testKey, "Test value");
+        done();
+      });
+    });
+
+    it('should remove *.meta.custom files', function(done){
+      this.metalsmith.use(metafiles({
+        parsers: {
+          ".custom": function(content, options) {
+            return {};
+          }
+        }
+      })).build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file.md.meta.custom"], undefined);
+        done();
+      });
+    });
+  });
 });

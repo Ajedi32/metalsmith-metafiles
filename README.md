@@ -113,9 +113,17 @@ You can also assign one of the built-in parsers to a custom file extension by
 using a string value corresponding to the name of the parser instead of just
 `true` or `false`. (E.g. `{".custom-yaml": 'js-yaml', '.j': 'JSON.parse'}`)
 
-Currently, two formats are supported: `.json` (named `JSON.parse`), and `.yaml` (
-via `js-yaml`). To use the YAML metadata format, you must have `js-yaml`
-installed (preferably listed as a dependency of your project).
+Additionally, when using Metalsmith from the JavaScript API (not from the CLI),
+you can assign a custom parser to any file extension by using a function as the
+value. The function is passed the contents of the file (as a Buffer) as its
+first argument, and an object with a `path` property assigned to the path of the
+file as its second argument. The function should return an object containing the
+metadata properties contained within the metadata file it was passed.
+
+Currently, two formats are supported through the CLI: `.json` (named
+`JSON.parse`), and `.yaml` (named `js-yaml`). To use the YAML metadata format,
+you must have `js-yaml` installed (preferably listed as a dependency of your
+project), and set `{".yaml": true}` in the `parsers` option.
 
 CLI config example:
 
@@ -147,6 +155,13 @@ Metalsmith(__dirname)
       ".json": false, // Disable using JSON metadata files
       ".yaml": true, // Enable using YAML metadata files
       ".y": "js-yaml", // Treat *.meta.y files as YAML metadata
+      ".js": function(content, options) { // Custom parser
+        // Print the path to the file
+        console.log("Parsing file: " + options.path + "!");
+
+        // Execute the file and return the result
+        return eval(content.toString());
+      },
     }
   }))
   .use(/* Other plugins... */)
