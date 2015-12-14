@@ -106,24 +106,40 @@ An object containing configuration details for the parsers used for different
 metadata formats.
 
 Each key should be an extension used by a parser (including the leading '.'),
-with a value of either `true` or `false` depending on whether or not you want
-the parser for that extension to be enabled. (E.g. `{".yaml": true}`)
+with a value of either a boolean, a string, a function, or an object.
 
-You can also assign one of the built-in parsers to a custom file extension by
-using a string value corresponding to the name of the parser instead of just
-`true` or `false`. (E.g. `{".custom-yaml": 'js-yaml', '.j': 'JSON.parse'}`)
+If you use a boolean (`true` or `false`) as the value, that simply determines
+whether or not you want the default parser for that extension to be enabled.
+(E.g. `{".yaml": true}` enables the `js-yaml` parser for `*.meta.yaml` files,
+and `{".json": false}` disables parsing JSON metadata files.)
 
-Additionally, when using Metalsmith from the JavaScript API (not from the CLI),
-you can assign a custom parser to any file extension by using a function as the
-value. The function is passed the contents of the file (as a Buffer) as its
-first argument, and an object with a `path` property assigned to the path of the
-file as its second argument. The function should return an object containing the
-metadata properties contained within the metadata file it was passed.
+If you use a string for the value, you can also choose a specific built-in
+parsers to be assigned to the given file extension. The string must correspond
+to the name of the built-in parser. (E.g. `{".custom-yaml": 'js-yaml',
+'.j': 'JSON.parse'}`)
 
-Currently, two formats are supported through the CLI: `.json` (named
-`JSON.parse`), and `.yaml` (named `js-yaml`). To use the YAML metadata format,
-you must have `js-yaml` installed (preferably listed as a dependency of your
-project), and set `{".yaml": true}` in the `parsers` option.
+Using a function for the value (which can only be done using the JavaScript API,
+not the CLI) allows you to assign a custom parser to a file extension. The
+function is passed the contents of the file (as a Buffer) as its first argument,
+and an object with a `path` property assigned to the path of the file as its
+second argument. The function should return an object containing the metadata
+properties contained within the metadata file it was passed.
+
+Using an object for the value allows for fine-grained control over the config
+settings used for the given parser. The object can contain any of the config
+options for metalsmith-metafiles mentioned above (except for `parsers` of
+course), and overrides the global settings for the given parser. Additionally,
+the object can contain (or must in the case of a file extension without a
+default parser) a `parser` property, which may be either a named parser or a
+function (both of which work as described in the paragraphs above).
+
+Currently, two named parsers are supported: `"JSON.parse"` (which is exactly
+what it sounds like), and "`js-yaml`" (an npm package which parses YAML
+formatted data files). To use the YAML metadata format, you must have `js-yaml`
+installed.
+
+By default, the `.json` files use the `"JSON.parse"` parser, and `.yaml` files
+(if enabled with `{".yaml": true}`) use the `js-yaml` parser.
 
 CLI config example:
 
@@ -135,7 +151,11 @@ CLI config example:
       "parsers": {
         ".json": false, // Disable using JSON metadata files
         ".yaml": true, // Enable using YAML metadata files
-        ".y": "js-yaml" // Treat *.meta.y files as YAML metadata
+        ".y": "js-yaml", // Treat *.meta.y files as YAML metadata
+        '.custom': {
+          parser: "js-yaml",
+          prefix: 'm-',
+        }
       }
     },
     // Other plugins...
@@ -161,6 +181,10 @@ Metalsmith(__dirname)
 
         // Execute the file and return the result
         return eval(content.toString());
+      },
+      '.custom': {
+        parser: "js-yaml",
+        prefix: 'm-',
       },
     }
   }))

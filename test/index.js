@@ -300,4 +300,50 @@ describe('metalsmith-metafiles', function(){
       });
     });
   });
+
+  context("with the extension .custom set to parse YAML metadata files with a custom prefix", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/per_parser_config')
+        .use(metafiles({
+          parsers: {
+            '.custom': {
+              parser: "js-yaml",
+              prefix: 'm-',
+            }
+          },
+        }));
+    });
+
+    it('should apply YAML metadata from m-*.meta.custom files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_one.md"].testKey, "File one value");
+        done();
+      });
+    });
+
+    it('should remove m-*.meta.custom files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["m-file_one.md.meta.custom"], undefined);
+        done();
+      });
+    });
+
+    it('should still apply json-formatted metadata from *.meta.json files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_two.md"].testKey, "File two value");
+        done();
+      });
+    });
+
+    it('should still remove *.meta.json files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file_two.md.meta.json"], undefined);
+        done();
+      });
+    });
+  });
 });
