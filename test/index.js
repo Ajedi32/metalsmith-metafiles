@@ -130,7 +130,7 @@ describe('metalsmith-metafiles', function(){
     });
   });
 
-  context("when the .yaml parser is enabled", function(){
+  context("when another parser is enabled", function(){
     beforeEach(function() {
       this.metalsmith = Metalsmith('test/fixtures/yaml_metafiles')
         .use(metafiles({
@@ -140,7 +140,7 @@ describe('metalsmith-metafiles', function(){
         }));
     });
 
-    it('should apply yaml-formatted metadata from *.meta.yaml files', function(done){
+    it('should apply metadata using the second parser', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
         assert.equal(files["file_one.md"].testKey, "File one value");
@@ -148,7 +148,7 @@ describe('metalsmith-metafiles', function(){
       });
     });
 
-    it('should remove *.meta.yaml files', function(done){
+    it('should remove metadata files for the second parser', function(done){
       this.metalsmith.build(function(err, files){
         if (err) return done(err);
         assert.equal(files["file_one.md.meta.yaml"], undefined);
@@ -345,5 +345,84 @@ describe('metalsmith-metafiles', function(){
         done();
       });
     });
+  });
+
+  describe("named parsers", function(){
+    function testParser(parserName) {
+      describe(parserName, function() {
+        context("when " + parserName + " is set as the parser for *.meta.custom files", function() {
+          beforeEach(function() {
+            this.metalsmith = Metalsmith('test/fixtures/named_parsers/' + parserName)
+              .use(metafiles({
+                parsers: {
+                  ".custom": parserName
+                }
+              }));
+          });
+
+          it('should apply correctly formatted metadata in *.meta.custom files', function(done){
+            this.metalsmith.build(function(err, files){
+              if (err) return done(err);
+              assert.equal(files["file.md"].testKey, "Test value");
+              done();
+            });
+          });
+
+          it('should remove *.meta.custom files', function(done){
+            this.metalsmith.build(function(err, files){
+              if (err) return done(err);
+              assert.equal(files["file.md.meta.custom"], undefined);
+              done();
+            });
+          });
+        });
+      });
+    }
+
+    [
+      "JSON.parse",
+      "js-yaml",
+      "eval"
+    ].forEach(testParser);
+  });
+
+  describe("default parsers", function(){
+    function testDefaultParser(extension) {
+      describe("." + extension, function() {
+        context("when the default parser for *.meta." + extension + " files is enabled", function() {
+          beforeEach(function() {
+            var enabledParsers = {};
+            enabledParsers["." + extension] = true;
+
+            this.metalsmith = Metalsmith('test/fixtures/default_parsers/' + extension)
+              .use(metafiles({
+                parsers: enabledParsers
+              }));
+          });
+
+          it("should apply correctly formatted metadata in *.meta." + extension + " files", function(done){
+            this.metalsmith.build(function(err, files){
+              if (err) return done(err);
+              assert.equal(files["file.md"].testKey, "Test value");
+              done();
+            });
+          });
+
+          it("should remove *.meta." + extension + " files", function(done){
+            this.metalsmith.build(function(err, files){
+              if (err) return done(err);
+              assert.equal(files["file.md.meta." + extension], undefined);
+              done();
+            });
+          });
+        });
+      });
+    }
+
+    [
+      "json",
+      "yaml",
+      "js"
+    ].forEach(testDefaultParser);
   });
 });

@@ -133,13 +133,21 @@ the object can contain (or must in the case of a file extension without a
 default parser) a `parser` property, which may be either a named parser or a
 function (both of which work as described in the paragraphs above).
 
-Currently, two named parsers are supported: `"JSON.parse"` (which is exactly
-what it sounds like), and "`js-yaml`" (an npm package which parses YAML
-formatted data files). To use the YAML metadata format, you must have `js-yaml`
-installed.
+Currently, the following named parsers are supported:
 
-By default, the `.json` files use the `"JSON.parse"` parser, and `.yaml` files
-(if enabled with `{".yaml": true}`) use the `js-yaml` parser.
+* `"JSON.parse"` - Exactly what it sounds like
+* `"js-yaml"` - An npm package which parses YAML formatted data files. To use
+  this, you must have `js-yaml` installed. (Preferably as a dependency of your
+  project.)
+* `"eval"` - Executes the file as JavaScript and returns the result of the last
+  expression
+
+The following file extensions are assigned default parsers when you enable them
+with `{".extension": true}` (only `.json` is enabled by default):
+
+* `.json` - Uses `"JSON.parse"` (enabled by default)
+* `.yaml` - Uses `"js-yaml"`
+* `.js` - Uses `"eval"`
 
 CLI config example:
 
