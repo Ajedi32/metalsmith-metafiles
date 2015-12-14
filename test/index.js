@@ -200,4 +200,31 @@ describe('metalsmith-metafiles', function(){
       });
     });
   });
+
+  context("with the extension .custom set to be parsed with js-yaml", function(){
+    beforeEach(function() {
+      this.metalsmith = Metalsmith('test/fixtures/custom_extension')
+        .use(metafiles({
+          parsers: {
+            ".custom": 'js-yaml'
+          }
+        }));
+    });
+
+    it('should apply yaml-formatted metadata from *.meta.custom files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file.md"].testKey, "Test value");
+        done();
+      });
+    });
+
+    it('should remove *.meta.custom files', function(done){
+      this.metalsmith.build(function(err, files){
+        if (err) return done(err);
+        assert.equal(files["file.md.meta.custom"], undefined);
+        done();
+      });
+    });
+  });
 });

@@ -107,9 +107,13 @@ metadata formats.
 
 Each key should be an extension used by a parser (including the leading '.'),
 with a value of either `true` or `false` depending on whether or not you want
-the parser for that extension to be enabled.
+the parser for that extension to be enabled. (E.g. `{".yaml": true}`)
 
-Currently, two formats are supported: `.json` (via `JSON.parse`), and `.yaml` (
+You can also assign one of the built-in parsers to a custom file extension by
+using a string value corresponding to the name of the parser instead of just
+`true` or `false`. (E.g. `{".custom-yaml": 'js-yaml', '.j': 'JSON.parse'}`)
+
+Currently, two formats are supported: `.json` (named `JSON.parse`), and `.yaml` (
 via `js-yaml`). To use the YAML metadata format, you must have `js-yaml`
 installed (preferably listed as a dependency of your project).
 
@@ -122,7 +126,8 @@ CLI config example:
     "metalsmith-metafiles": {
       "parsers": {
         ".json": false, // Disable using JSON metadata files
-        ".yaml": true // Enable using YAML metadata files
+        ".yaml": true, // Enable using YAML metadata files
+        ".y": "js-yaml" // Treat *.meta.y files as YAML metadata
       }
     },
     // Other plugins...
@@ -141,6 +146,7 @@ Metalsmith(__dirname)
     parsers: {
       ".json": false, // Disable using JSON metadata files
       ".yaml": true, // Enable using YAML metadata files
+      ".y": "js-yaml", // Treat *.meta.y files as YAML metadata
     }
   }))
   .use(/* Other plugins... */)
