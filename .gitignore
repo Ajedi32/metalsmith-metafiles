@@ -1,3 +1,4 @@
 node_modules/
 test/fixtures/*/build
 test/fixtures/named_parsers/*/build
+test/fixtures/default_parsers/*/build
