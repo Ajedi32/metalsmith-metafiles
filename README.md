@@ -141,6 +141,8 @@ Currently, the following named parsers are supported:
   project.)
 * `"eval"` - Executes the file as JavaScript and returns the result of the last
   expression
+* `"require"` - Requires the file as a Node module and returns the module's
+  exports
 
 The following file extensions are assigned default parsers when you enable them
 with `{".extension": true}` (only `.json` is enabled by default):
