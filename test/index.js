@@ -384,6 +384,7 @@ describe('metalsmith-metafiles', function(){
       "js-yaml",
       "eval",
       "require",
+      "eval-wrapped",
     ].forEach(testParser);
   });
 

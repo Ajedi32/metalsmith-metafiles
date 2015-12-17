@@ -141,6 +141,8 @@ Currently, the following named parsers are supported:
   project.)
 * `"eval"` - Executes the file as JavaScript and returns the result of the last
   expression
+* `"eval-wrapped"` - Like `eval`, but wraps the file's code in an object before
+  evaluating it. (E.g. `(function() {return {...}; })()`)
 * `"require"` - Requires the file as a Node module and returns the module's
   exports
 
