@@ -1,5 +1,3 @@
-var result = {};
-result.testKey = "Test value";
+module.exports = {};
 
-/*jshint -W030 */
-result;
+module.exports.testKey = "Test value";

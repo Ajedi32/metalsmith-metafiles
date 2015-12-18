@@ -151,7 +151,7 @@ with `{".extension": true}` (only `.json` is enabled by default):
 
 * `.json` - Uses `"JSON.parse"` (enabled by default)
 * `.yaml` - Uses `"js-yaml"`
-* `.js` - Uses `"eval"`
+* `.js` - Uses `"require"`
 
 CLI config example:
 
