@@ -149,6 +149,9 @@ Currently, the following named parsers are supported:
   `coffee-script` package, and returns the result of the last expression. To use
   this, you must have `coffee-script` installed. (Preferably as a dependency of
   your project.)
+* `"toml"` - Parses TOML formatted data files using the `toml` npm package. To
+  use this, you must have `toml` installed. (Preferably as a dependency of your
+  project.)
 
 The following file extensions are assigned default parsers when you enable them
 with `{".extension": true}` (only `.json` is enabled by default):

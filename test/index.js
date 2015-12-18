@@ -386,6 +386,7 @@ describe('metalsmith-metafiles', function(){
       "require",
       "eval-wrapped",
       "coffee-script",
+      "toml",
     ].forEach(testParser);
   });
 
