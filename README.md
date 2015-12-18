@@ -145,6 +145,10 @@ Currently, the following named parsers are supported:
   evaluating it. (E.g. `(function() {return {...}; })()`)
 * `"require"` - Requires the file as a Node module and returns the module's
   exports
+* `"coffee-script"` - Executes the file as CoffeeScript using the
+  `coffee-script` package, and returns the result of the last expression. To use
+  this, you must have `coffee-script` installed. (Preferably as a dependency of
+  your project.)
 
 The following file extensions are assigned default parsers when you enable them
 with `{".extension": true}` (only `.json` is enabled by default):
