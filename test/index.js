@@ -42,6 +42,14 @@ describe('metalsmith-metafiles', function() {
     });
   });
 
+  it('should throw an error for metadata files with no corresponding main file', function(done) {
+    runMetalsmithMetafiles('test/fixtures/missing_main_file').then(function(files) {
+      done(new Error("Expected build to fail, but it succeeded!"));
+    }, function(err) {
+      done();
+    });
+  });
+
   context("when the deleteMetaFiles option is set to false", function() {
     it('should not remove metadata files', function() {
       return runMetalsmithMetafiles('test/fixtures/basic', {
