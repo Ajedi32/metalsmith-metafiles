@@ -50,6 +50,56 @@ describe('metalsmith-metafiles', function() {
     });
   });
 
+  context("when the onMissingMainFile option is set to 'ignore'", function() {
+    runMetalsmithMetafilesBeforeEach('test/fixtures/missing_main_file', {
+      onMissingMainFile: 'ignore',
+    });
+
+    it('should ignore metadata files with no corresponding main file', function() {
+      assert(this.result); // No errors
+    });
+    it('should not delete metadata files with no corresponding main file', function() {
+      assert.notEqual(this.result['index.md.meta.json'], undefined);
+    });
+  });
+
+  context("when the onMissingMainFile option is set to 'delete'", function() {
+    runMetalsmithMetafilesBeforeEach('test/fixtures/missing_main_file', {
+      onMissingMainFile: 'delete',
+    });
+
+    it('should ignore metadata files with no corresponding main file', function() {
+      assert(this.result); // No errors
+    });
+    it('should delete metadata files with no corresponding main file', function() {
+      assert.equal(this.result['index.md.meta.json'], undefined);
+    });
+  });
+
+  context("when the onMissingMainFile option is set to 'throw'", function() {
+    it('should throw an error for metadata files with no corresponding main file', function(done) {
+      runMetalsmithMetafiles('test/fixtures/missing_main_file', {
+        onMissingMainFile: 'throw',
+      }).then(function(files) {
+        done(new Error("Expected build to fail, but it succeeded!"));
+      }, function(err) {
+        done();
+      });
+    });
+  });
+
+  context("when the onMissingMainFile option is set to an invalid value", function() {
+    it('should throw an error', function(done) {
+      runMetalsmithMetafiles('test/fixtures/basic', {
+        onMissingMainFile: 'asdf',
+      }).then(function(files) {
+        done(new Error("Expected build to fail, but it succeeded!"));
+      }, function(err) {
+        done();
+      });
+    });
+  });
+
   context("when the deleteMetaFiles option is set to false", function() {
     it('should not remove metadata files', function() {
       return runMetalsmithMetafiles('test/fixtures/basic', {

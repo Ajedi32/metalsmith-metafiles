@@ -96,6 +96,22 @@ For example, setting this option to `"m-"`, in combination with the default
 postfix value of `".meta"`, would result in `m-*.meta.json` files being used to
 store metadata.
 
+### `onMissingMainFile`
+
+Type: `String`
+
+Default: `"throw"`
+
+Controls what happens when metalsmith-metafiles encounters a metadata file with
+no corresponding main file. (E.g. when `a.meta.json` exists, but not `a`.)
+
+The possible values are:
+
+* `"throw"` - Throws an error when a metadata file with no corresponding main
+  file is encountered (default)
+* `"ignore"` - Silently ignores metadata files with no corresponding main file
+* `"delete"` - Deletes metadata files with no corresponding main file
+
 ### `parsers`
 
 Type: `Object`
