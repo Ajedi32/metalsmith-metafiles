@@ -7,6 +7,13 @@ For example, when using this plugin you could add metadata to a file named
 `index.html` by creating a file named `index.html.meta.json` and putting your
 metadata in that file.
 
+Why choose this method over frontmatter? While frontmatter is a convenient way
+to set metadata in your files, it can cause problems with syntax highlighters,
+[linters](https://github.com/jekyll/jekyll/issues/3408), and other tools which
+expect your source files to contain only valid syntax from the language they are
+written in. (Frontmatter isn't valid CSS, HTML, JavaScript, etc.) Putting your
+metadata in separate files eliminates these problems.
+
 Currently, metalsmith-metafiles supports the JSON, YAML, CSON, and TOML formats,
 among others. (See the [parsers](#parsers) section below for details.)
 
