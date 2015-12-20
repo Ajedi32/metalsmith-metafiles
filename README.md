@@ -7,6 +7,9 @@ For example, when using this plugin you could add metadata to a file named
 `index.html` by creating a file named `index.html.meta.json` and putting your
 metadata in that file.
 
+Currently, metalsmith-metafiles supports the JSON, YAML, CSON, and TOML formats,
+among others. (See the [parsers](#parsers) section below for details.)
+
 ## Installation
 
     npm install --save metalsmith-metafiles
