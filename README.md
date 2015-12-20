@@ -174,7 +174,11 @@ with `{".extension": true}` (only `.json` is enabled by default):
 
 * `.json` - Uses `"JSON.parse"` (enabled by default)
 * `.yaml` - Uses `"js-yaml"`
+* `.yml` - Uses `"js-yaml"`
 * `.js` - Uses `"require"`
+* `.coffee` - Uses `"coffee-script"`
+* `.cson` - Uses `"coffee-script"`
+* `.toml` - Uses `"toml"`
 
 CLI config example:
 

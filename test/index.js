@@ -357,7 +357,11 @@ describe('metalsmith-metafiles', function() {
     [
       "json",
       "yaml",
-      "js"
+      "yml",
+      "js",
+      "coffee",
+      "cson",
+      "toml",
     ].forEach(testDefaultParser);
   });
 });
